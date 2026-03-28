@@ -1,0 +1,3 @@
+.PHONY: go-build-all
+go-build-all:
+	go build ./...

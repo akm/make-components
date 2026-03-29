@@ -1,11 +1,20 @@
-# ## Requires:
-# - PATH_TO_MAKE_COMPONENTS: path to the directory where the make-components are located, used to call the go install makefile
-
-# ## public variables
-# GO_INSTALL_PATH_TO_BIN: path to the directory where the golang tool binaries are installed
+# ## go/install.mk
+# Go ツールバイナリの install / uninstall を管理するユーティリティ。
+# GOBIN または GOPATH/bin を自動検出し、モジュールパスからバイナリパスの解決・インストール・アンインストールを行う。
+# golangci-lint 等の外部ツール管理用 .mk から呼び出されることを想定している。
 #
-# GO_INSTALL_GOBIN: path to the directory where the golang tool binaries are installed, if set
-# GO_INSTALL_GOPATH: path to the GOPATH, used to determine the default installation path for golang tool binaries when GO_INSTALL_GOBIN is not set
+# ## Requires:
+# - PATH_TO_MAKE_COMPONENTS: make-components ディレクトリへのパス
+#
+# ## Public variables:
+# - GO_INSTALL_PATH_TO_BIN: ツールバイナリのインストール先ディレクトリ (GOBIN または GOPATH/bin)
+# - GO_INSTALL_GOBIN: go env GOBIN の値（設定されている場合）
+# - GO_INSTALL_GOPATH: go env GOPATH の値（GOBIN 未設定時のフォールバックに使用）
+#
+# ## Public functions (call で使用):
+# - go-install-bin-path(MODULE): モジュールパスからバイナリのフルパスを返す
+# - go-install-install(MODULE, VERSION): 指定バージョンのモジュールを go install する
+# - go-install-uninstall(BIN_PATH): 指定パスのバイナリを削除する
 
 GO_INSTALL_GOBIN=$(shell go env GOBIN)
 GO_INSTALL_GOPATH=$(shell go env GOPATH)

@@ -1,3 +1,20 @@
+# ## firestore-emulator/test.mk
+# テスト用 Firestore Emulator を Docker コンテナで自動起動・停止する。
+# google/cloud-sdk:emulators イメージを使用し、起動後にヘルスチェック（最大30秒）で待機する。
+#
+# ## Requires:
+# - docker: コンテナの起動・停止に使用
+# - curl: エミュレータのヘルスチェックに使用
+#
+# ## Variables (overridable):
+# - FIRESTORE_EMULATOR_PORT: ホスト側の公開ポート (default: 8280)
+# - FIRESTORE_EMULATOR_CONTAINER: Docker コンテナ名 (default: uchimark-test-firestore)
+# - FIRESTORE_EMULATOR_HOST_PORT: エミュレータへの接続先 (default: localhost:$(FIRESTORE_EMULATOR_PORT))
+#
+# ## Targets:
+# - firestore-emulator-start: エミュレータが未起動の場合のみ起動する（冪等）
+# - firestore-emulator-stop: エミュレータが起動中の場合のみ停止・削除する（冪等）
+
 FIRESTORE_EMULATOR_PORT ?= 8280
 FIRESTORE_EMULATOR_CONTAINER ?= uchimark-test-firestore
 FIRESTORE_EMULATOR_HOST_PORT ?= localhost:$(FIRESTORE_EMULATOR_PORT)

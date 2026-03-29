@@ -1,5 +1,23 @@
-# Requires:
-# - make-components/go/install.mk
+# ## golangci-lint/run.mk
+# golangci-lint の install / uninstall / run を管理する。
+# go/install.mk のユーティリティ関数を使い、バイナリが未インストールの場合は自動で install する。
+# v1 / v2 の両方に対応しており、GOLANGCLI_LINT_VERSION_BASE で切り替え可能。
+#
+# ## Requires:
+# - go/install.mk: go-install-bin-path, go-install-install, go-install-uninstall 関数を使用
+#
+# ## Variables (overridable):
+# - GOLANGCLI_LINT_VERSION_BASE: メジャーバージョン系統 (default: v2)
+# - GOLANGCLI_LINT_VERSION: インストールするバージョン (default: latest)
+#
+# ## Internal variables:
+# - GOLANGCLI_LINT_MODULE: バージョン系統に対応するモジュールパス
+# - GOLANGCLI_LINT_BIN: golangci-lint バイナリのフルパス
+#
+# ## Targets:
+# - golangci-lint-run: lint を実行する（未インストール時は自動 install）
+# - golangci-lint-install: golangci-lint をインストールする
+# - golangci-lint-uninstall: golangci-lint をアンインストールする
 
 GOLANGCLI_LINT_VERSION_BASE?=v2
 GOLANGCLI_LINT_VERSION?=latest
